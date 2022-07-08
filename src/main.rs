@@ -9,6 +9,7 @@ use crate::generators::demo1;
 
 pub mod math_util;
 pub mod generators;
+pub mod models;
 
 fn main() {
     print!("{}[2J", 27 as char); // Clear screen
@@ -16,13 +17,14 @@ fn main() {
 
     let height = 225;
     let width = 400;
-    let quality = 60; // From 0 to 100
-    let path = "output/output.jpg";
+    //let quality = 60; // From 0 to 100
+    let path = "output/output.png";
 
     println!(
-        "Image size: {}\nJPEG quality: {}",
+        //"Image size: {}\nJPEG quality: {}",
+        "Image size: {}\nPNG",
         style(width.to_string() + &"x".to_string() + &height.to_string()).yellow(),
-        style(quality.to_string()).yellow(),
+        //style(quality.to_string()).yellow(),
     );
 
     // Create image data
@@ -62,7 +64,7 @@ fn main() {
     println!("Ouput image as \"{}\"", style(path).yellow());
     let output_image = image::DynamicImage::ImageRgb8(img);
     let mut output_file = File::create(path).unwrap();
-    match output_image.write_to(&mut output_file, image::ImageOutputFormat::Jpeg(quality)) {
+    match output_image.write_to(&mut output_file, image::ImageOutputFormat::Png) {
         Ok(_) => {}
         // Err(_) => panic!("Outputting image fails."),
         Err(_) => println!("{}", style("Outputting image fails.").red()),
