@@ -10,6 +10,7 @@ use crate::generators::*;
 pub mod math_util;
 pub mod generators;
 pub mod models;
+pub mod camera;
 
 fn main() {
     print!("{}[2J", 27 as char); // Clear screen
@@ -57,7 +58,7 @@ fn main() {
     }
     */
 
-    demo2::render(height, width, &mut img, &progress);
+    demo3::render(height, width, &mut img, &progress);
     progress.finish();
 
     // Output image to file
