@@ -5,7 +5,7 @@ use image::{ImageBuffer, RgbImage};
 use console::style;
 use indicatif::{ProgressBar, ProgressStyle};
 
-use crate::generators::demo1;
+use crate::generators::*;
 
 pub mod math_util;
 pub mod generators;
@@ -57,7 +57,7 @@ fn main() {
     }
     */
 
-    demo1(height, width, &mut img, &progress);
+    demo2::render(height, width, &mut img, &progress);
     progress.finish();
 
     // Output image to file

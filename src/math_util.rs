@@ -148,6 +148,7 @@ pub fn cross(u:&Vec3,v:&Vec3)->Vec3{
     }
 }
 
+#[derive(Debug,Copy,Clone)]
 pub struct Ray{
     orig:Point3,
     dir:Vec3,
@@ -163,11 +164,11 @@ impl Ray{
             dir:*dir
         }
     }
-    pub fn get_origin(&self)->Point3{
-        self.orig
+    pub fn get_origin(&self)->&Point3{
+        &self.orig
     }
-    pub fn get_direction(&self)->Vec3{
-        self.dir
+    pub fn get_direction(&self)->&Vec3{
+        &self.dir
     }
     pub fn at(&self,t:f64)->Point3{
         self.orig+self.dir*t
