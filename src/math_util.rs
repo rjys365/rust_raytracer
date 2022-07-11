@@ -1,5 +1,7 @@
 use std::ops::{Add,AddAssign,Sub,SubAssign,Mul,MulAssign,Div,DivAssign,Neg};
 
+use rand::{prelude::ThreadRng, Rng};
+
 #[derive(Debug,Copy,Clone,Default)]
 pub struct Vec3{
     pub x:f64,
@@ -32,8 +34,21 @@ impl Vec3{
     pub fn unit_vector(&self)->Vec3{
         *self/self.length()
     }
+    pub fn random_range(l:f64,h:f64,rng:&mut ThreadRng)->Self{
+        Vec3 {x:rng.gen_range(l..h), y:rng.gen_range(l..h), z:rng.gen_range(l..h)}
+    }
+    pub fn random_in_unit_sphere(rng:&mut ThreadRng)->Self{
+        loop{
+            let p=Vec3::random_range(-1.0, 1.0, rng);
+            if p.length_squared()<1.0 {return p;}
+        }
+    }
+    //to vector of u8 with gamma correction
     pub fn to_uvec(&self)->[u8;3]{
-        [f64::min(255.0,self.x*256.0)as u8,f64::min(255.0,self.y*256.0)as u8,f64::min(255.0,self.z*256.0)as u8]
+        let r=self.x.sqrt();
+        let g=self.y.sqrt();
+        let b=self.z.sqrt();
+        [f64::min(255.0,r*256.0)as u8,f64::min(255.0,g*256.0)as u8,f64::min(255.0,b*256.0)as u8]
     }
 }
 

@@ -6,13 +6,16 @@ use crate::camera::Camera;
 use crate::math_util::{Vec3,Point3,Color,Ray/*,dot,cross*/};
 use crate::models::hittable::{Hittable,HittableList};
 use crate::models::sphere::Sphere;
+use rand::prelude::ThreadRng;
 //use std::f64::consts::PI;
 use std::f64::INFINITY;
 use std::rc::Rc;
 
-fn ray_color(r:&Ray,world:&dyn Hittable)->Color{
+fn ray_color(r:&Ray,world:&dyn Hittable,depth:i32,rng: &mut ThreadRng)->Color{
+    if depth<=0 {return Color::default();}
     if let Some(rec)=world.hit(r, 0.0, INFINITY){
-        return 0.5*(rec.normal+Color::from(1.0, 1.0, 1.0));
+        let target=rec.p+rec.normal+Vec3::random_in_unit_sphere(rng);
+        return 0.5*ray_color(&Ray::from(&rec.p, &(target-rec.p)), world, depth-1, rng);
     }
     let unit_direction=r.get_direction().unit_vector();
     let t=0.5*(unit_direction.get_y()+1.0);
@@ -22,6 +25,7 @@ fn ray_color(r:&Ray,world:&dyn Hittable)->Color{
 pub fn render(image_height:u32,image_width:u32,img:&mut RgbImage,progress:&ProgressBar){
     let mut rng=rand::thread_rng();
     const SAMPLES_PER_PIXEL:u32=100;
+    const MAX_DEPTH:i32=50;
     //let aspect_ratio:f64=image_width as f64/image_height as f64;
 
     //World
@@ -41,7 +45,7 @@ pub fn render(image_height:u32,image_width:u32,img:&mut RgbImage,progress:&Progr
                 let u=(i as f64 + rng.gen::<f64>())/(image_width as f64 - 1.0);
                 let v=(j as f64 + rng.gen::<f64>())/(image_height as f64 -1.0);
                 let r=cam.get_ray(u, v);
-                pixel_color+=ray_color(&r, &world);
+                pixel_color+=ray_color(&r, &world,MAX_DEPTH,&mut rng);
             }
             pixel_color/=SAMPLES_PER_PIXEL as f64;
             let pixel = img.get_pixel_mut(i,image_height-1-j);
