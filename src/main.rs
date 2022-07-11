@@ -23,7 +23,7 @@ fn main() {
     println!(
         //"Image size: {}\nJPEG quality: {}",
         "Image size: {}\nPNG",
-        style(width.to_string() + &"x".to_string() + &height.to_string()).yellow(),
+        style(width.to_string() + "x" + &height.to_string()).yellow(),
         //style(quality.to_string()).yellow(),
     );
 

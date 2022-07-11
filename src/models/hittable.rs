@@ -1,7 +1,7 @@
 use crate::math_util::*;
 use std::rc::Rc;
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug,Default, Copy, Clone)]
 pub struct HitRecord {
     pub p: Point3,
     pub normal: Vec3,
@@ -10,14 +10,6 @@ pub struct HitRecord {
 }
 
 impl HitRecord{
-    pub fn new()->HitRecord{
-        HitRecord{
-            p:Vec3::new(),
-            normal:Vec3::new(),
-            t:0.0,
-            front_face:true
-        }
-    }
     pub fn set_face_normal(r:&Ray,outward_normal:Vec3)->(bool,Vec3){
         let front_face=dot(r.get_direction(),&outward_normal)<0.0;
         (front_face,if front_face {outward_normal} else {-outward_normal})
@@ -37,19 +29,17 @@ pub trait Hittable {
     fn hit(&self, r: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord>;
 }
 
+#[derive(Default)]
 pub struct HittableList{
     pub objects:Vec<Rc<dyn Hittable>>
 }
 
 impl HittableList{
-    pub fn new()->HittableList{
-        HittableList { objects: Vec::new() }
-    }
     pub fn add(&mut self,object:Rc<dyn Hittable>){
         self.objects.push(object);
     }
     pub fn from(object:Rc<dyn Hittable>)->HittableList{
-        let mut list=HittableList::new();
+        let mut list=HittableList::default();
         list.add(object);
         list
     }
@@ -60,7 +50,7 @@ impl HittableList{
 
 impl Hittable for HittableList{
     fn hit(&self, r: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord> {
-        let mut rec=HitRecord::new();
+        let mut rec=HitRecord::default();
         let mut hit_anything=false;
         let mut closest_so_far=t_max;
         for object in self.objects.iter(){

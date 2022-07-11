@@ -32,7 +32,7 @@ pub fn render(image_height:u32,image_width:u32,img:&mut RgbImage,progress:&Progr
     let focal_length:f64=1.0;
 
     //Render
-    let origin:Point3=Vec3::new();
+    let origin:Point3=Vec3::default();
     let horizontal:Vec3=Vec3{x:viewport_width,y:0.0,z:0.0};
     let vertical:Vec3=Vec3{x:0.0,y:viewport_height,z:0.0};
     let lower_left_corner=origin-horizontal/2.0-vertical/2.0-Vec3{x:0.0,y:0.0,z:focal_length};

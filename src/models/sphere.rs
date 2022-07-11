@@ -9,9 +9,6 @@ pub struct Sphere{
 }
 
 impl Sphere{
-    pub fn new() -> Self{
-        Self{center:Vec3::new(),radius:0.0}
-    }
     pub fn from(center:Point3,radius:f64)->Self{
         Self{center,radius}
     }

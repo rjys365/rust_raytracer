@@ -1,6 +1,6 @@
 use std::ops::{Add,AddAssign,Sub,SubAssign,Mul,MulAssign,Div,DivAssign,Neg};
 
-#[derive(Debug,Copy,Clone)]
+#[derive(Debug,Copy,Clone,Default)]
 pub struct Vec3{
     pub x:f64,
     pub y:f64,
@@ -11,11 +11,8 @@ pub type Color=Vec3;
 pub type Point3=Vec3;
 
 impl Vec3{
-    pub fn new()->Self{
-        Self { x: 0.0, y: 0.0, z: 0.0 }
-    }
     pub fn from(x:f64,y:f64,z:f64)->Self{
-        Self {x:x,y:y,z:z}
+        Self {x,y,z}
     }
     pub fn length(&self)->f64{
         f64::sqrt(self.x*self.x+self.y*self.y+self.z*self.z)
@@ -148,16 +145,13 @@ pub fn cross(u:&Vec3,v:&Vec3)->Vec3{
     }
 }
 
-#[derive(Debug,Copy,Clone)]
+#[derive(Debug,Default,Copy,Clone)]
 pub struct Ray{
     orig:Point3,
     dir:Vec3,
 }
 
 impl Ray{
-    pub fn new()->Ray{
-        Ray { orig: Vec3::new(), dir: Vec3::new() }
-    }
     pub fn from(orig:&Point3,dir:&Vec3)->Ray{
         Ray {
             orig:*orig,

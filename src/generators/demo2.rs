@@ -21,7 +21,7 @@ pub fn render(image_height:u32,image_width:u32,img:&mut RgbImage,progress:&Progr
     let aspect_ratio:f64=image_width as f64/image_height as f64;
 
     //World
-    let mut world=HittableList::new();
+    let mut world=HittableList::default();
     world.add(Rc::new(Sphere::from(Point3::from(0.0, 0.0, -1.0), 0.5)));
     world.add(Rc::new(Sphere::from(Point3::from(0.0,-100.5,-1.0),100.0)));
 
@@ -31,7 +31,7 @@ pub fn render(image_height:u32,image_width:u32,img:&mut RgbImage,progress:&Progr
     let focal_length:f64=1.0;
 
     //Render
-    let origin:Point3=Point3::new();
+    let origin:Point3=Point3::default();
     let horizontal:Vec3=Vec3{x:viewport_width,y:0.0,z:0.0};
     let vertical:Vec3=Vec3{x:0.0,y:viewport_height,z:0.0};
     let lower_left_corner=origin-horizontal/2.0-vertical/2.0-Vec3{x:0.0,y:0.0,z:focal_length};
