@@ -14,8 +14,8 @@ fn hit_sphere(center:&Point3,radius:f64,r:&Ray)->f64{
 fn ray_color(r:&Ray)->Color{
     let t=hit_sphere(&Vec3::from(0.0, 0.0, -1.0), 0.5, r);
     if t>0.0{
-        let N=(r.at(t)-Vec3::from(0.0,0.0,-1.0)).unit_vector();
-        return Vec3::from(N.get_x()+1.0,N.get_y()+1.0,N.get_z()+1.0);
+        let n=(r.at(t)-Vec3::from(0.0,0.0,-1.0)).unit_vector();
+        return Vec3::from(n.get_x()+1.0,n.get_y()+1.0,n.get_z()+1.0);
     }
     let unit_direction=r.get_direction().unit_vector();
     let t=0.5*(unit_direction.get_y()+1.0);
