@@ -5,7 +5,7 @@ use image::{ImageBuffer, RgbImage};
 use console::style;
 use indicatif::{ProgressBar, ProgressStyle};
 
-use crate::generators::*;
+use crate::generators::render;
 
 pub mod camera;
 pub mod generators;
@@ -43,7 +43,7 @@ fn main() {
         .progress_chars("#>-"));
 
     // Generate image
-    demo3::render(height, width, &mut img, &progress);
+    render::render(height, width, &mut img, &progress);
     progress.finish();
 
     // Output image to file
