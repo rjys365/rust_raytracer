@@ -1,7 +1,6 @@
 use super::Material;
 use crate::math_util::{dot, Color, Ray, Vec3};
 use crate::models::hittable::HitRecord;
-use rand::prelude::ThreadRng;
 
 pub struct Metal {
     pub albedo: Color,
@@ -18,12 +17,9 @@ impl Metal {
 }
 
 impl Material for Metal {
-    fn scatter(&self, r_in: &Ray, rec: &HitRecord, rand: &mut ThreadRng) -> Option<(Color, Ray)> {
+    fn scatter(&self, r_in: &Ray, rec: &HitRecord) -> Option<(Color, Ray)> {
         let reflected = Vec3::reflect(r_in.get_direction(), &rec.normal);
-        let scattered = Ray::new(
-            rec.p,
-            reflected + self.fuzz * Vec3::random_in_unit_sphere(rand),
-        );
+        let scattered = Ray::new(rec.p, reflected + self.fuzz * Vec3::random_in_unit_sphere());
         let attenuation = self.albedo;
         if dot(scattered.get_direction(), &rec.normal) > 0.0 {
             Some((attenuation, scattered))

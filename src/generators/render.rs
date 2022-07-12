@@ -3,24 +3,22 @@ use crate::camera::Camera;
 use crate::material::dielectric::Dieletric;
 use crate::material::lambertian::Lambertian;
 use crate::material::metal::Metal;
-use crate::math_util::{Color, Point3, Ray /*,dot,cross*/, Vec3};
+use crate::math_util::{rand_double, Color, Point3, Ray, Vec3};
 use crate::models::hittable::{Hittable, HittableList};
 use crate::models::sphere::Sphere;
 use image::RgbImage;
 use indicatif::ProgressBar;
-use rand::prelude::ThreadRng;
-use rand::Rng;
 //use std::f64::consts::PI;
 use std::f64::INFINITY;
 use std::rc::Rc;
 
-fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32, rng: &mut ThreadRng) -> Color {
+fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32) -> Color {
     if depth <= 0 {
         return Color::default();
     }
     if let Some(rec) = world.hit(r, 0.001, INFINITY) {
-        if let Some((attenuation, scattered)) = rec.mat_ptr.scatter(r, &rec, rng) {
-            return attenuation * ray_color(&scattered, world, depth - 1, rng);
+        if let Some((attenuation, scattered)) = rec.mat_ptr.scatter(r, &rec) {
+            return attenuation * ray_color(&scattered, world, depth - 1);
         } else {
             return Color::default();
         }
@@ -31,7 +29,6 @@ fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32, rng: &mut ThreadRng) -> 
 }
 
 pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress: &ProgressBar) {
-    let mut rng = rand::thread_rng();
     const SAMPLES_PER_PIXEL: u32 = 100;
     const MAX_DEPTH: i32 = 50;
     //let aspect_ratio:f64=image_width as f64/image_height as f64;
@@ -77,10 +74,10 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
         for i in 0..image_width - 1 {
             let mut pixel_color = Color::default();
             for _k in 1..SAMPLES_PER_PIXEL {
-                let u = (i as f64 + rng.gen::<f64>()) / (image_width as f64 - 1.0);
-                let v = (j as f64 + rng.gen::<f64>()) / (image_height as f64 - 1.0);
+                let u = (i as f64 + rand_double()) / (image_width as f64 - 1.0);
+                let v = (j as f64 + rand_double()) / (image_height as f64 - 1.0);
                 let r = cam.get_ray(u, v);
-                pixel_color += ray_color(&r, &world, MAX_DEPTH, &mut rng);
+                pixel_color += ray_color(&r, &world, MAX_DEPTH);
             }
             pixel_color /= SAMPLES_PER_PIXEL as f64;
             let pixel = img.get_pixel_mut(i, image_height - 1 - j);

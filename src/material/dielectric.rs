@@ -1,7 +1,6 @@
 use super::Material;
 use crate::math_util::{dot, Color, Ray, Vec3};
 use crate::models::hittable::HitRecord;
-use rand::prelude::ThreadRng;
 
 pub struct Dieletric {
     pub ir: f64, //index of refraction
@@ -14,7 +13,7 @@ impl Dieletric {
 }
 
 impl Material for Dieletric {
-    fn scatter(&self, r_in: &Ray, rec: &HitRecord, _rand: &mut ThreadRng) -> Option<(Color, Ray)> {
+    fn scatter(&self, r_in: &Ray, rec: &HitRecord) -> Option<(Color, Ray)> {
         let attenuation = Color::new(1.0, 1.0, 1.0);
         let refraction_ratio = if rec.front_face {
             1.0 / self.ir

@@ -1,6 +1,5 @@
+use rand::Rng;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
-
-use rand::{prelude::ThreadRng, Rng};
 
 #[derive(Debug, Copy, Clone, Default)]
 pub struct Vec3 {
@@ -34,23 +33,23 @@ impl Vec3 {
     pub fn unit_vector(&self) -> Vec3 {
         *self / self.length()
     }
-    pub fn random_range(l: f64, h: f64, rng: &mut ThreadRng) -> Self {
+    pub fn random_range(l: f64, h: f64) -> Self {
         Vec3 {
-            x: rng.gen_range(l..h),
-            y: rng.gen_range(l..h),
-            z: rng.gen_range(l..h),
+            x: rand_range(l, h),
+            y: rand_range(l, h),
+            z: rand_range(l, h),
         }
     }
-    pub fn random_in_unit_sphere(rng: &mut ThreadRng) -> Self {
+    pub fn random_in_unit_sphere() -> Self {
         loop {
-            let p = Vec3::random_range(-1.0, 1.0, rng);
+            let p = Vec3::random_range(-1.0, 1.0);
             if p.length_squared() < 1.0 {
                 return p;
             }
         }
     }
-    pub fn random_unit_vector(rng: &mut ThreadRng) -> Self {
-        Self::random_in_unit_sphere(rng).unit_vector()
+    pub fn random_unit_vector() -> Self {
+        Self::random_in_unit_sphere().unit_vector()
     }
     //to vector of u8 with gamma correction
     pub fn to_uvec(&self) -> [u8; 3] {
@@ -231,4 +230,15 @@ pub fn clamp(x: f64, min: f64, max: f64) -> f64 {
     } else {
         x
     }
+}
+
+//shortcut to generate a real number in [0..1)
+pub fn rand_double() -> f64 {
+    let mut rng = rand::thread_rng();
+    rng.gen()
+}
+
+pub fn rand_range(l: f64, h: f64) -> f64 {
+    let mut rng = rand::thread_rng();
+    rng.gen_range(l..h)
 }
