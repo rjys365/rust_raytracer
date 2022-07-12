@@ -15,6 +15,6 @@ impl Material for Lambertian {
         } else {
             scatter_direction_t
         };
-        Some((self.albedo, Ray::new(&rec.p, &scatter_direction)))
+        Some((self.albedo, Ray::new(rec.p, scatter_direction)))
     }
 }
