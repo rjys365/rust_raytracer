@@ -43,6 +43,9 @@ impl Vec3{
             if p.length_squared()<1.0 {return p;}
         }
     }
+    pub fn random_unit_vector(rng:&mut ThreadRng)->Self{
+        Self::random_in_unit_sphere(rng).unit_vector()
+    }
     //to vector of u8 with gamma correction
     pub fn to_uvec(&self)->[u8;3]{
         let r=self.x.sqrt();

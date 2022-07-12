@@ -14,7 +14,7 @@ use std::rc::Rc;
 fn ray_color(r:&Ray,world:&dyn Hittable,depth:i32,rng: &mut ThreadRng)->Color{
     if depth<=0 {return Color::default();}
     if let Some(rec)=world.hit(r, 0.001, INFINITY){
-        let target=rec.p+rec.normal+Vec3::random_in_unit_sphere(rng);
+        let target=rec.p+rec.normal+Vec3::random_unit_vector(rng);
         return 0.5*ray_color(&Ray::from(&rec.p, &(target-rec.p)), world, depth-1, rng);
     }
     let unit_direction=r.get_direction().unit_vector();
