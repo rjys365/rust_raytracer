@@ -71,7 +71,7 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
         Point3::new(-2.0, 2.0, 1.0),
         Point3::new(0.0, 0.0, -1.0),
         Vec3::new(0.0, 1.0, 0.0),
-        90.0,
+        20.0,
         aspect_ratio,
     );
 
