@@ -44,12 +44,8 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
     let material_center = Rc::new(Lambertian {
         albedo: Color::new(0.7, 0.3, 0.3),
     });
-    let material_left = Rc::new(Metal {
-        albedo: Color::new(0.8, 0.8, 0.8),
-    });
-    let material_right = Rc::new(Metal {
-        albedo: Color::new(0.8, 0.6, 0.2),
-    });
+    let material_left = Rc::new(Metal::new(Color::new(0.8, 0.8, 0.8), 0.3));
+    let material_right = Rc::new(Metal::new(Color::new(0.8, 0.6, 0.2), 0.3));
 
     world.add(Rc::new(Sphere::new(
         Point3::new(0.0, -100.5, -1.0),
