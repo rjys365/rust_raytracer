@@ -1,32 +1,39 @@
-use crate::math_util::{Point3,Vec3,Ray};
+use crate::math_util::{Point3, Ray, Vec3};
 
 #[derive(Clone, Copy)]
-pub struct Camera{
-    pub origin:Point3,
-    pub lower_left_corner:Point3,
-    pub horizontal:Vec3,
-    pub vertical:Vec3,
+pub struct Camera {
+    pub origin: Point3,
+    pub lower_left_corner: Point3,
+    pub horizontal: Vec3,
+    pub vertical: Vec3,
 }
 
-impl Default for Camera{
+impl Default for Camera {
     fn default() -> Self {
-        const ASPECT_RATIO:f64=16.0/9.0;
-        const VIEWPORT_HEIGHT:f64=2.0;
-        const VIEWPORT_WIDTH:f64=ASPECT_RATIO*VIEWPORT_HEIGHT;
-        const FOCAL_LENGTH:f64=1.0;
+        const ASPECT_RATIO: f64 = 16.0 / 9.0;
+        const VIEWPORT_HEIGHT: f64 = 2.0;
+        const VIEWPORT_WIDTH: f64 = ASPECT_RATIO * VIEWPORT_HEIGHT;
+        const FOCAL_LENGTH: f64 = 1.0;
 
-        let origin=Point3::default();
-        let horizontal=Vec3::from(VIEWPORT_WIDTH,0.0,0.0);
-        let vertical=Vec3::from(0.0,VIEWPORT_HEIGHT,0.0);
-        let lower_left_corner=origin-horizontal/2.0-vertical/2.0-Vec3::from(0.0,0.0,FOCAL_LENGTH);
-        Self{
-            origin,lower_left_corner,horizontal,vertical
+        let origin = Point3::default();
+        let horizontal = Vec3::from(VIEWPORT_WIDTH, 0.0, 0.0);
+        let vertical = Vec3::from(0.0, VIEWPORT_HEIGHT, 0.0);
+        let lower_left_corner =
+            origin - horizontal / 2.0 - vertical / 2.0 - Vec3::from(0.0, 0.0, FOCAL_LENGTH);
+        Self {
+            origin,
+            lower_left_corner,
+            horizontal,
+            vertical,
         }
     }
 }
 
-impl Camera{
-    pub fn get_ray(&self,u:f64,v:f64)->Ray{
-        Ray::from(&self.origin,&(self.lower_left_corner+u*self.horizontal+v*self.vertical-self.origin))
+impl Camera {
+    pub fn get_ray(&self, u: f64, v: f64) -> Ray {
+        Ray::from(
+            &self.origin,
+            &(self.lower_left_corner + u * self.horizontal + v * self.vertical - self.origin),
+        )
     }
 }

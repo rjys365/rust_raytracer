@@ -7,11 +7,11 @@ use indicatif::{ProgressBar, ProgressStyle};
 
 use crate::generators::*;
 
-pub mod math_util;
-pub mod generators;
-pub mod models;
 pub mod camera;
+pub mod generators;
 pub mod material;
+pub mod math_util;
+pub mod models;
 
 fn main() {
     print!("{}[2J", 27 as char); // Clear screen
