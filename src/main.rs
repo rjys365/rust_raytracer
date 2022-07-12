@@ -43,22 +43,6 @@ fn main() {
         .progress_chars("#>-"));
 
     // Generate image
-
-    /*
-    for y in 0..height {
-        for x in 0..width {
-            let pixel_color = [
-                (y as f32 / height as f32 * 255.).floor() as u8,
-                ((x + height - y) as f32 / (height + width) as f32 * 255.).floor() as u8,
-                (x as f32 / height as f32 * 255.).floor() as u8,
-            ];
-            let pixel = img.get_pixel_mut(x, height - y - 1);
-            *pixel = image::Rgb(pixel_color);
-            progress.inc(1);
-        }
-    }
-    */
-
     demo3::render(height, width, &mut img, &progress);
     progress.finish();
 
