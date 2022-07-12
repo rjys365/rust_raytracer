@@ -44,7 +44,7 @@ impl Hittable for Sphere {
             root1
         };
 
-        if root1 < t_min || root1 > t_max {
+        if root < t_min || root > t_max {
             return None;
         }
 
