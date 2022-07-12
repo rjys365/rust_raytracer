@@ -10,14 +10,24 @@ pub struct Camera {
 
 impl Default for Camera {
     fn default() -> Self {
-        const ASPECT_RATIO: f64 = 16.0 / 9.0;
-        const VIEWPORT_HEIGHT: f64 = 2.0;
-        const VIEWPORT_WIDTH: f64 = ASPECT_RATIO * VIEWPORT_HEIGHT;
+        Self::new(90.0,16.0/9.0)
+    }
+}
+
+impl Camera {
+    pub fn new(
+        vfov:f64,//vertical field-of-view in degrees
+        aspect_ratio:f64
+    ) -> Self {
+        let theta=vfov.to_radians();
+        let h= f64::tan(theta/2.0);
+        let viewport_height=2.0*h;
+        let viewport_width=aspect_ratio*viewport_height;
         const FOCAL_LENGTH: f64 = 1.0;
 
         let origin = Point3::default();
-        let horizontal = Vec3::new(VIEWPORT_WIDTH, 0.0, 0.0);
-        let vertical = Vec3::new(0.0, VIEWPORT_HEIGHT, 0.0);
+        let horizontal = Vec3::new(viewport_width, 0.0, 0.0);
+        let vertical = Vec3::new(0.0, viewport_height, 0.0);
         let lower_left_corner =
             origin - horizontal / 2.0 - vertical / 2.0 - Vec3::new(0.0, 0.0, FOCAL_LENGTH);
         Self {
@@ -27,9 +37,6 @@ impl Default for Camera {
             vertical,
         }
     }
-}
-
-impl Camera {
     pub fn get_ray(&self, u: f64, v: f64) -> Ray {
         Ray::new(
             self.origin,
