@@ -53,6 +53,13 @@ impl Vec3{
         let b=self.z.sqrt();
         [f64::min(255.0,r*256.0)as u8,f64::min(255.0,g*256.0)as u8,f64::min(255.0,b*256.0)as u8]
     }
+    pub fn near_zero(&self)->bool{
+        const EPS:f64=1e-8;
+        (self.x.abs()<EPS)&&(self.y.abs()<EPS)&&(self.z.abs()<EPS)
+    }
+    pub fn reflect(&self,n:&Self)->Self{
+        *self-(2.0*dot(self,n))*(*n)
+    }
 }
 
 impl Add for Vec3{
@@ -96,6 +103,17 @@ impl Mul<f64> for Vec3{
             x:(self.x*rhs),
             y:(self.y*rhs),
             z:(self.z*rhs)
+        }
+    }
+}
+
+impl Mul<Vec3> for Vec3{
+    type Output = Self;
+    fn mul(self, rhs: Vec3)-> Self{
+        Self{
+            x:(self.x*rhs.x),
+            y:(self.y*rhs.y),
+            z:(self.z*rhs.z)
         }
     }
 }

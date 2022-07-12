@@ -1,16 +1,20 @@
+use std::rc::Rc;
+
 use crate::math_util::*;
+use crate::material::Material;
 
 use super::hittable::{Hittable, HitRecord};
 
-#[derive(Debug,Copy,Clone)]
+#[derive(Clone)]
 pub struct Sphere{
     pub center:Point3,
     pub radius:f64,
+    pub mat_ptr:Rc<dyn Material>,
 }
 
 impl Sphere{
-    pub fn from(center:Point3,radius:f64)->Self{
-        Self{center,radius}
+    pub fn from(center:Point3,radius:f64,mat_ptr:Rc<dyn Material>)->Self{
+        Self{center,radius,mat_ptr}
     }
 }
 
@@ -33,7 +37,7 @@ impl Hittable for Sphere{
         if root1<t_min||root1>t_max {return None;}
 
         let outward_normal=(r.at(root)-self.center)/self.radius;
-        let rec=HitRecord::from(r.at(root),root,r,outward_normal);
+        let rec=HitRecord::from(r.at(root),root,r,outward_normal,self.mat_ptr.clone());
         Some(rec)
     }
 }
