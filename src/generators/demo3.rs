@@ -40,10 +40,10 @@ pub fn render(image_height:u32,image_width:u32,img:&mut RgbImage,progress:&Progr
     let material_left=Rc::new(Metal{albedo:Color::from(0.8,0.8,0.8)});
     let material_right=Rc::new(Metal{albedo:Color::from(0.8,0.6,0.2)});
 
-    world.add(Rc::new(Sphere::from(Point3::from(0.0,-100.5,-1.0),100.0,material_ground.clone())));
-    world.add(Rc::new(Sphere::from(Point3::from(0.0,0.0,-1.0),0.5,material_center.clone())));
-    world.add(Rc::new(Sphere::from(Point3::from(-1.0,0.0,-1.0),0.5,material_left.clone())));
-    world.add(Rc::new(Sphere::from(Point3::from(1.0,0.0,-1.0),0.5,material_right.clone())));
+    world.add(Rc::new(Sphere::from(Point3::from(0.0,-100.5,-1.0),100.0,material_ground)));
+    world.add(Rc::new(Sphere::from(Point3::from(0.0,0.0,-1.0),0.5,material_center)));
+    world.add(Rc::new(Sphere::from(Point3::from(-1.0,0.0,-1.0),0.5,material_left)));
+    world.add(Rc::new(Sphere::from(Point3::from(1.0,0.0,-1.0),0.5,material_right)));
     //Camera
     let cam=Camera::default();
 
