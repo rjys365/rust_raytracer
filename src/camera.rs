@@ -10,19 +10,19 @@ pub struct Camera {
 
 impl Default for Camera {
     fn default() -> Self {
-        Self::new(90.0,16.0/9.0)
+        Self::new(90.0, 16.0 / 9.0)
     }
 }
 
 impl Camera {
     pub fn new(
-        vfov:f64,//vertical field-of-view in degrees
-        aspect_ratio:f64
+        vfov: f64, //vertical field-of-view in degrees
+        aspect_ratio: f64,
     ) -> Self {
-        let theta=vfov.to_radians();
-        let h= f64::tan(theta/2.0);
-        let viewport_height=2.0*h;
-        let viewport_width=aspect_ratio*viewport_height;
+        let theta = vfov.to_radians();
+        let h = f64::tan(theta / 2.0);
+        let viewport_height = 2.0 * h;
+        let viewport_width = aspect_ratio * viewport_height;
         const FOCAL_LENGTH: f64 = 1.0;
 
         let origin = Point3::default();

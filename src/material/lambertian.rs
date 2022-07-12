@@ -17,3 +17,9 @@ impl Material for Lambertian {
         Some((self.albedo, Ray::new(rec.p, scatter_direction)))
     }
 }
+
+impl Lambertian {
+    pub fn new(albedo: Color) -> Self {
+        Self { albedo }
+    }
+}
