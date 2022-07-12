@@ -75,6 +75,14 @@ impl Vec3 {
         let r_put_para = (-f64::sqrt(f64::abs(1.0 - r_out_perp.length_squared()))) * (*n);
         r_out_perp + r_put_para
     }
+    pub fn random_in_unit_disk() -> Self {
+        loop {
+            let p = Vec3::new(rand_range(-1.0, 1.0), rand_range(-1.0, 1.0), 0.0);
+            if p.length_squared() < 1.0 {
+                return p;
+            }
+        }
+    }
 }
 
 impl Add for Vec3 {
