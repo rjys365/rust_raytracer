@@ -1,16 +1,17 @@
 //anti-alias render
 use crate::camera::Camera;
-use crate::material::dielectric::Dieletric;
-use crate::material::lambertian::Lambertian;
-use crate::material::metal::Metal;
+// use crate::material::dielectric::Dieletric;
+// use crate::material::lambertian::Lambertian;
+// use crate::material::metal::Metal;
 use crate::math_util::{rand_double, Color, Point3, Ray, Vec3};
-use crate::models::hittable::{Hittable, HittableList};
-use crate::models::sphere::Sphere;
+use crate::models::hittable::Hittable;
+use crate::models::random_scene::random_scene;
+// use crate::models::sphere::Sphere;
 use image::RgbImage;
 use indicatif::ProgressBar;
 //use std::f64::consts::PI;
 use std::f64::INFINITY;
-use std::rc::Rc;
+// use std::rc::Rc;
 
 fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32) -> Color {
     if depth <= 0 {
@@ -34,45 +35,15 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
     let aspect_ratio: f64 = image_width as f64 / image_height as f64;
 
     //World
-    let mut world = HittableList::default();
+    let world = random_scene();
 
-    let material_ground = Rc::new(Lambertian::new(Color::new(0.8, 0.8, 0.0)));
-    let material_center = Rc::new(Lambertian::new(Color::new(0.1, 0.2, 0.5)));
-    let material_left = Rc::new(Dieletric::new(1.5));
-    let material_right = Rc::new(Metal::new(Color::new(0.8, 0.6, 0.2), 0.0));
-
-    world.add(Rc::new(Sphere::new(
-        Point3::new(0.0, -100.5, -1.0),
-        100.0,
-        material_ground,
-    )));
-    world.add(Rc::new(Sphere::new(
-        Point3::new(0.0, 0.0, -1.0),
-        0.5,
-        material_center,
-    )));
-    world.add(Rc::new(Sphere::new(
-        Point3::new(-1.0, 0.0, -1.0),
-        0.5,
-        material_left.clone(),
-    )));
-    world.add(Rc::new(Sphere::new(
-        Point3::new(-1.0, 0.0, -1.0),
-        -0.45,
-        material_left,
-    )));
-    world.add(Rc::new(Sphere::new(
-        Point3::new(1.0, 0.0, -1.0),
-        0.5,
-        material_right,
-    )));
     //Camera
 
-    let lookfrom = Point3::new(3.0, 3.0, 2.0);
-    let lookat = Point3::new(0.0, 0.0, -1.0);
+    let lookfrom = Point3::new(13.0, 2.0, 3.0);
+    let lookat = Point3::default();
     let vup = Vec3::new(0.0, 1.0, 0.0);
-    let aperture = 2.0;
-    let dist_to_focus = (lookfrom - lookat).length();
+    let aperture = 0.1;
+    let dist_to_focus = 10.0;
     let cam = Camera::new(
         lookfrom,
         lookat,

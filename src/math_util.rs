@@ -33,6 +33,9 @@ impl Vec3 {
     pub fn unit_vector(&self) -> Vec3 {
         *self / self.length()
     }
+    pub fn random() -> Self {
+        Vec3::new(rand_double(), rand_double(), rand_double())
+    }
     pub fn random_range(l: f64, h: f64) -> Self {
         Vec3 {
             x: rand_range(l, h),
