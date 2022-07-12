@@ -26,7 +26,7 @@ fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32, rng: &mut ThreadRng) -> 
     }
     let unit_direction = r.get_direction().unit_vector();
     let t = 0.5 * (unit_direction.get_y() + 1.0);
-    Vec3::from(1.0, 1.0, 1.0) * (1.0 - t) + Vec3::from(0.5, 0.7, 1.0)
+    Vec3::new(1.0, 1.0, 1.0) * (1.0 - t) + Vec3::new(0.5, 0.7, 1.0)
 }
 
 pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress: &ProgressBar) {
@@ -39,35 +39,35 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
     let mut world = HittableList::default();
 
     let material_ground = Rc::new(Lambertian {
-        albedo: Color::from(0.8, 0.8, 0.0),
+        albedo: Color::new(0.8, 0.8, 0.0),
     });
     let material_center = Rc::new(Lambertian {
-        albedo: Color::from(0.7, 0.3, 0.3),
+        albedo: Color::new(0.7, 0.3, 0.3),
     });
     let material_left = Rc::new(Metal {
-        albedo: Color::from(0.8, 0.8, 0.8),
+        albedo: Color::new(0.8, 0.8, 0.8),
     });
     let material_right = Rc::new(Metal {
-        albedo: Color::from(0.8, 0.6, 0.2),
+        albedo: Color::new(0.8, 0.6, 0.2),
     });
 
-    world.add(Rc::new(Sphere::from(
-        Point3::from(0.0, -100.5, -1.0),
+    world.add(Rc::new(Sphere::new(
+        Point3::new(0.0, -100.5, -1.0),
         100.0,
         material_ground,
     )));
-    world.add(Rc::new(Sphere::from(
-        Point3::from(0.0, 0.0, -1.0),
+    world.add(Rc::new(Sphere::new(
+        Point3::new(0.0, 0.0, -1.0),
         0.5,
         material_center,
     )));
-    world.add(Rc::new(Sphere::from(
-        Point3::from(-1.0, 0.0, -1.0),
+    world.add(Rc::new(Sphere::new(
+        Point3::new(-1.0, 0.0, -1.0),
         0.5,
         material_left,
     )));
-    world.add(Rc::new(Sphere::from(
-        Point3::from(1.0, 0.0, -1.0),
+    world.add(Rc::new(Sphere::new(
+        Point3::new(1.0, 0.0, -1.0),
         0.5,
         material_right,
     )));

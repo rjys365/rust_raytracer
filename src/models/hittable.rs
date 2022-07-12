@@ -22,7 +22,7 @@ impl HitRecord {
             },
         )
     }
-    pub fn from(
+    pub fn new(
         p: Point3,
         t: f64,
         r: &Ray,
@@ -53,7 +53,7 @@ impl HittableList {
     pub fn add(&mut self, object: Rc<dyn Hittable>) {
         self.objects.push(object);
     }
-    pub fn from(object: Rc<dyn Hittable>) -> HittableList {
+    pub fn new(object: Rc<dyn Hittable>) -> HittableList {
         let mut list = HittableList::default();
         list.add(object);
         list

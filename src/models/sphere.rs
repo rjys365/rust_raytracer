@@ -13,7 +13,7 @@ pub struct Sphere {
 }
 
 impl Sphere {
-    pub fn from(center: Point3, radius: f64, mat_ptr: Rc<dyn Material>) -> Self {
+    pub fn new(center: Point3, radius: f64, mat_ptr: Rc<dyn Material>) -> Self {
         Self {
             center,
             radius,
@@ -49,7 +49,7 @@ impl Hittable for Sphere {
         }
 
         let outward_normal = (r.at(root) - self.center) / self.radius;
-        let rec = HitRecord::from(r.at(root), root, r, outward_normal, self.mat_ptr.clone());
+        let rec = HitRecord::new(r.at(root), root, r, outward_normal, self.mat_ptr.clone());
         Some(rec)
     }
 }

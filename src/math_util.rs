@@ -13,7 +13,7 @@ pub type Color = Vec3;
 pub type Point3 = Vec3;
 
 impl Vec3 {
-    pub fn from(x: f64, y: f64, z: f64) -> Self {
+    pub fn new(x: f64, y: f64, z: f64) -> Self {
         Self { x, y, z }
     }
     pub fn length(&self) -> f64 {
@@ -210,7 +210,7 @@ pub struct Ray {
 }
 
 impl Ray {
-    pub fn from(orig: &Point3, dir: &Vec3) -> Ray {
+    pub fn new(orig: &Point3, dir: &Vec3) -> Ray {
         Ray {
             orig: *orig,
             dir: *dir,
