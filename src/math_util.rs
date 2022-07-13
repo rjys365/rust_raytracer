@@ -21,13 +21,13 @@ impl Vec3 {
     pub fn length_squared(&self) -> f64 {
         self.x * self.x + self.y * self.y + self.z * self.z
     }
-    pub fn get_x(&self) -> f64 {
+    pub fn x(&self) -> f64 {
         self.x
     }
-    pub fn get_y(&self) -> f64 {
+    pub fn y(&self) -> f64 {
         self.y
     }
-    pub fn get_z(&self) -> f64 {
+    pub fn z(&self) -> f64 {
         self.z
     }
     pub fn unit_vector(&self) -> Vec3 {
@@ -222,10 +222,10 @@ impl Ray {
     pub fn new(orig: Point3, dir: Vec3) -> Ray {
         Ray { orig, dir }
     }
-    pub fn get_origin(&self) -> &Point3 {
+    pub fn origin(&self) -> &Point3 {
         &self.orig
     }
-    pub fn get_direction(&self) -> &Vec3 {
+    pub fn direction(&self) -> &Vec3 {
         &self.dir
     }
     pub fn at(&self, t: f64) -> Point3 {

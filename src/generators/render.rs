@@ -24,8 +24,8 @@ fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32) -> Color {
             return Color::default();
         }
     }
-    let unit_direction = r.get_direction().unit_vector();
-    let t = 0.5 * (unit_direction.get_y() + 1.0);
+    let unit_direction = r.direction().unit_vector();
+    let t = 0.5 * (unit_direction.y() + 1.0);
     Vec3::new(1.0, 1.0, 1.0) * (1.0 - t) + Vec3::new(0.5, 0.7, 1.0)
 }
 
@@ -62,7 +62,7 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
             for _k in 1..SAMPLES_PER_PIXEL {
                 let u = (i as f64 + rand_double()) / (image_width as f64 - 1.0);
                 let v = (j as f64 + rand_double()) / (image_height as f64 - 1.0);
-                let r = cam.get_ray(u, v);
+                let r = cam.ray(u, v);
                 pixel_color += ray_color(&r, &world, MAX_DEPTH);
             }
             pixel_color /= SAMPLES_PER_PIXEL as f64;

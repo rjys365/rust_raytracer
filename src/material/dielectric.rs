@@ -26,7 +26,7 @@ impl Material for Dieletric {
             self.ir
         };
 
-        let unit_direction = r_in.get_direction().unit_vector();
+        let unit_direction = r_in.direction().unit_vector();
         //let refracted = Vec3::refract(&unit_direction, &rec.normal, refraction_ratio);
         let cos_theta = f64::min(dot(&-unit_direction, &rec.normal), 1.0);
         let sin_theta = f64::sqrt(1.0 - cos_theta * cos_theta);
