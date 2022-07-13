@@ -73,30 +73,20 @@ impl Hittable for BvhNode {
         Some(self.bx)
     }
     fn hit(&self, r: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord> {
-        if !self.bx.hit(r, t_min, t_max) {
-            return None;
-        }
-        let l_result = if let Some(lchild) = &self.left {
-            lchild.hit(r, t_min, t_max)
-        } else {
-            None
-        };
-        if let Some(lrec) = l_result {
-            if let Some(rchild) = &self.right {
-                if let Some(rrec) = rchild.hit(r, t_min, lrec.t) {
-                    Some(rrec)
-                } else {
-                    Some(lrec)
-                }
-            } else {
-                Some(lrec)
-            }
-        } else {
-            if let Some(rchild) = &self.right {
-                rchild.hit(r, t_min, t_max)
-            } else {
-                None
+        let mut ret:Option<HitRecord>=None;
+        let mut ok:bool=false;
+        if let Some(lchild)=&self.left{
+            if let Some(lrec)=lchild.hit(r, t_min, t_max){
+                ret=Some(lrec);
+                ok=true;
             }
         }
+        if let Some(rchild)=&self.right{
+            if let(Some(rrec))=rchild.hit(r, t_min, if ok {ret.as_ref().unwrap().t} else{t_max}){
+                ret=Some(rrec);
+                ok=true;
+            }
+        }
+        if ok {ret} else{None}
     }
 }
