@@ -10,11 +10,11 @@ use std::rc::Rc;
 pub fn random_scene() -> HittableList {
     let mut world: HittableList = HittableList::default();
     let ground_material = Rc::new(Lambertian::new(Color::new(0.5, 0.5, 0.5)));
-    world.add(Rc::new(Sphere::new(
-        Point3::new(0.0, -1000.0, 0.0),
-        1000.0,
-        ground_material,
-    )));
+    // world.add(Rc::new(Sphere::new(
+    //     Point3::new(0.0, -1000.0, 0.0),
+    //     1000.0,
+    //     ground_material,
+    // )));
     let material_glass = Rc::new(Dieletric::new(1.5));
     for a in -11..10 {
         for b in -11..10 {

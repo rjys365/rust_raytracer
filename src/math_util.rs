@@ -1,5 +1,5 @@
 use rand::Rng;
-use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign,Index};
 
 #[derive(Debug, Copy, Clone, Default)]
 pub struct Vec3 {
@@ -201,6 +201,16 @@ impl Neg for Vec3 {
     }
 }
 
+impl Index<usize> for Vec3{
+    type Output = f64;
+    fn index(&self, index: usize) -> &Self::Output {
+        if index==0 {&self.x}
+        else if index==1 {&self.y}
+        else if index==2 {&self.z}
+        else {panic!("Vec3 index out of bound")}
+    }
+}
+
 pub fn dot(u: &Vec3, v: &Vec3) -> f64 {
     u.x * v.x + u.y * v.y + u.z * v.z
 }
@@ -261,6 +271,11 @@ pub fn rand_double() -> f64 {
 }
 
 pub fn rand_range(l: f64, h: f64) -> f64 {
+    let mut rng = rand::thread_rng();
+    rng.gen_range(l..h)
+}
+
+pub fn rand_int(l:i32,h:i32)->i32{
     let mut rng = rand::thread_rng();
     rng.gen_range(l..h)
 }

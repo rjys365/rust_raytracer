@@ -3,7 +3,10 @@ use std::rc::Rc;
 use crate::material::Material;
 use crate::math_util::*;
 
-use super::hittable::{HitRecord, Hittable};
+use super::{
+    aabb::Aabb,
+    hittable::{HitRecord, Hittable},
+};
 
 #[derive(Clone)]
 pub struct Sphere {
@@ -51,5 +54,11 @@ impl Hittable for Sphere {
         let outward_normal = (r.at(root) - self.center) / self.radius;
         let rec = HitRecord::new(r.at(root), root, r, outward_normal, self.mat_ptr.clone());
         Some(rec)
+    }
+    fn bounding_box(&self, _time0: f64, _time1: f64) -> Option<Aabb> {
+        Some(Aabb::new(
+            self.center - Vec3::new(self.radius, self.radius, self.radius),
+            self.center + Vec3::new(self.radius, self.radius, self.radius),
+        ))
     }
 }

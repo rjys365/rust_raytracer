@@ -1,7 +1,10 @@
-use super::hittable::{HitRecord, Hittable};
+use super::{
+    aabb::Aabb,
+    hittable::{HitRecord, Hittable},
+};
 use crate::{
     material::Material,
-    math_util::{dot, Point3, Ray},
+    math_util::{dot, Point3, Ray, Vec3},
 };
 use std::rc::Rc;
 
@@ -68,5 +71,18 @@ impl Hittable for MovingSphere {
         let outward_normal = (r.at(root) - self.center(r.time())) / self.radius;
         let rec = HitRecord::new(r.at(root), root, r, outward_normal, self.mat_ptr.clone());
         Some(rec)
+    }
+    fn bounding_box(&self, t0: f64, t1: f64) -> Option<Aabb> {
+        let t0=f64::max(self.time0,t0);
+        let t1=f64::min(self.time1,t1);
+        let box0 = Aabb::new(
+            self.center(t0) - Vec3::new(self.radius, self.radius, self.radius),
+            self.center(t0) + Vec3::new(self.radius, self.radius, self.radius),
+        );
+        let box1=Aabb::new(
+            self.center(t1) - Vec3::new(self.radius, self.radius, self.radius),
+            self.center(t1) + Vec3::new(self.radius, self.radius, self.radius),
+        );
+        Some(Aabb::surrounding_box(&box0, &box1))
     }
 }

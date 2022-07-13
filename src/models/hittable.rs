@@ -1,3 +1,4 @@
+use super::aabb::Aabb;
 use crate::{material::Material, math_util::*};
 use std::rc::Rc;
 
@@ -42,6 +43,7 @@ impl HitRecord {
 
 pub trait Hittable {
     fn hit(&self, r: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord>;
+    fn bounding_box(&self, time0: f64, time1: f64) -> Option<Aabb>;
 }
 
 #[derive(Default)]
@@ -74,5 +76,27 @@ impl Hittable for HittableList {
             }
         }
         rec
+    }
+    fn bounding_box(&self, time0: f64, time1: f64) -> Option<Aabb> {
+        if self.objects.is_empty() {
+            return None;
+        }
+
+        let mut ret_box = Aabb::default();
+        let mut first_box = true;
+
+        for object in self.objects.iter() {
+            if let Some(temp_box) = object.bounding_box(time0, time1) {
+                ret_box = if first_box {
+                    temp_box
+                } else {
+                    Aabb::surrounding_box(&ret_box, &temp_box)
+                };
+                first_box = false;
+            } else {
+                return None;
+            }
+        }
+        Some(ret_box)
     }
 }
