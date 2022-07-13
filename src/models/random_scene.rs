@@ -1,9 +1,10 @@
 use crate::material::dielectric::Dieletric;
 use crate::material::lambertian::Lambertian;
 use crate::material::metal::Metal;
-use crate::math_util::{rand_double, rand_range, Color, Point3};
+use crate::math_util::{rand_double, rand_range, Color, Point3, Vec3};
 
 use super::hittable::HittableList;
+use super::moving_sphere::MovingSphere;
 use super::sphere::Sphere;
 use std::rc::Rc;
 pub fn random_scene() -> HittableList {
@@ -28,7 +29,15 @@ pub fn random_scene() -> HittableList {
                     //diffuse
                     let albedo = Color::random() * Color::random();
                     let sphere_material = Rc::new(Lambertian::new(albedo));
-                    world.add(Rc::new(Sphere::new(center, 0.2, sphere_material)));
+                    let center2 = center + Vec3::new(0.0, rand_range(0.0, 0.5), 0.0);
+                    world.add(Rc::new(MovingSphere::new(
+                        center,
+                        center2,
+                        0.0,
+                        1.0,
+                        0.2,
+                        sphere_material,
+                    )));
                 } else if choose_mat < 0.95 {
                     //metal
                     let albedo = Color::random_range(0.5, 1.0);

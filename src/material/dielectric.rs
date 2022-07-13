@@ -38,6 +38,6 @@ impl Material for Dieletric {
             } else {
                 Vec3::refract(&unit_direction, &rec.normal, refraction_ratio)
             };
-        Some((attenuation, Ray::new(rec.p, direction)))
+        Some((attenuation, Ray::new_time(rec.p, direction, r_in.time())))
     }
 }

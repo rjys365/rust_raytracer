@@ -52,6 +52,8 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
         aspect_ratio,
         aperture,
         dist_to_focus,
+        0.0,
+        1.0,
     );
 
     //Render
@@ -62,7 +64,7 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
             for _k in 1..SAMPLES_PER_PIXEL {
                 let u = (i as f64 + rand_double()) / (image_width as f64 - 1.0);
                 let v = (j as f64 + rand_double()) / (image_height as f64 - 1.0);
-                let r = cam.ray(u, v);
+                let r = cam.get_ray(u, v);
                 pixel_color += ray_color(&r, &world, MAX_DEPTH);
             }
             pixel_color /= SAMPLES_PER_PIXEL as f64;
