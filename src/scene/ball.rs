@@ -34,7 +34,8 @@ pub fn ball()->HittableList{
 
     for i in 0..10 {
         let bound=Rc::new(Sphere::new(ball_pos[i]*100.0,100.0,glass.clone()));
-        objects.add(Rc::new(ConstantMedium::new_solid_color(bound,0.2,ball_col[i])));
+        objects.add(Rc::new(ConstantMedium::new_solid_color(bound.clone(),0.2,ball_col[i])));
+        objects.add(bound);
         //objects.add(Rc::new(Sphere::new(ball_pos[i]*100.0,100.0,Rc::new(Lambertian::new_solid_color(ball_col[i])))));//triangle balls
     }
 
@@ -45,7 +46,7 @@ pub fn ball()->HittableList{
 
     objects.add(Rc::new(XzRect::new(-10000.0,10000.0,-10000.0,10000.0,-100.0,Rc::new(Lambertian::new_solid_color(Color::new(0.2,0.9,0.2))))));//floor
 
-    objects.add(Rc::new(XzRect::new(-200.0,200.0,-200.0,200.0,1000.0,Rc::new(DiffuseLight::new_solid_color(Color::new(16.0,16.0,16.0))))));//lamp
+    objects.add(Rc::new(XzRect::new(-400.0,200.0,-200.0,200.0,1000.0,Rc::new(DiffuseLight::new_solid_color(Color::new(16.0,16.0,16.0))))));//lamp
     objects.add(Rc::new(YzRect::new(-200.0,10000.0,-10000.0,10000.0,800.0,Rc::new(Lambertian::new_solid_color(Color::new(0.2,0.9,0.2))))));//back wall
 
     objects
