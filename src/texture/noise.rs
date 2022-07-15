@@ -31,8 +31,9 @@ impl Default for NoiseTexture {
     }
 }
 
+const TURB_DEPTH: i32 = 7;
 impl Texture for NoiseTexture {
     fn value(&self, _u: f64, _v: f64, p: Point3) -> Color {
-        Color::new(1.0, 1.0, 1.0) * self.noise.noise(&(p * self.scale))
+        Color::new(1.0, 1.0, 1.0) * self.noise.turb(&(p * self.scale), TURB_DEPTH)
     }
 }
