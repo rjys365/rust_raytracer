@@ -12,6 +12,7 @@ pub mod generators;
 pub mod material;
 pub mod math_util;
 pub mod models;
+pub mod texture;
 
 fn main() {
     print!("{}[2J", 27 as char); // Clear screen

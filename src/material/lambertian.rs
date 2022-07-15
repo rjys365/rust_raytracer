@@ -1,9 +1,13 @@
+use std::rc::Rc;
+
 use super::Material;
 use crate::math_util::{Color, Ray, Vec3};
 use crate::models::hittable::HitRecord;
+use crate::texture::solid_color::SolidColor;
+use crate::texture::Texture;
 
 pub struct Lambertian {
-    pub albedo: Color,
+    pub albedo: Rc<dyn Texture>,
 }
 
 impl Material for Lambertian {
@@ -15,14 +19,19 @@ impl Material for Lambertian {
             scatter_direction_t
         };
         Some((
-            self.albedo,
+            self.albedo.value(rec.u, rec.v, rec.p),
             Ray::new_time(rec.p, scatter_direction, r_in.time()),
         ))
     }
 }
 
 impl Lambertian {
-    pub fn new(albedo: Color) -> Self {
-        Self { albedo }
+    pub fn new_solid_color(albedo: Color) -> Self {
+        Self {
+            albedo: Rc::new(SolidColor::new(albedo)),
+        }
+    }
+    pub fn new_texture(texture: Rc<dyn Texture>) -> Self {
+        Self { albedo: texture }
     }
 }

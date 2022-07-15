@@ -2,6 +2,7 @@ use crate::material::dielectric::Dieletric;
 use crate::material::lambertian::Lambertian;
 use crate::material::metal::Metal;
 use crate::math_util::{rand_double, rand_range, Color, Point3, Vec3};
+use crate::texture::checker_texture::CheckerTexture;
 
 use super::hittable::HittableList;
 use super::moving_sphere::MovingSphere;
@@ -9,12 +10,16 @@ use super::sphere::Sphere;
 use std::rc::Rc;
 pub fn random_scene() -> HittableList {
     let mut world: HittableList = HittableList::default();
-    let ground_material = Rc::new(Lambertian::new(Color::new(0.5, 0.5, 0.5)));
-    // world.add(Rc::new(Sphere::new(
-    //     Point3::new(0.0, -1000.0, 0.0),
-    //     1000.0,
-    //     ground_material,
-    // )));
+    let checker = Rc::new(CheckerTexture::new_color(
+        Color::new(0.2, 0.3, 0.1),
+        Color::new(0.9, 0.9, 0.9),
+    ));
+    // let ground_material = Rc::new(Lambertian::new(Color::new(0.5, 0.5, 0.5)));
+    world.add(Rc::new(Sphere::new(
+        Point3::new(0.0, -1000.0, 0.0),
+        1000.0,
+        Rc::new(Lambertian::new_texture(checker)),
+    )));
     let material_glass = Rc::new(Dieletric::new(1.5));
     for a in -11..10 {
         for b in -11..10 {
@@ -28,7 +33,7 @@ pub fn random_scene() -> HittableList {
                 if choose_mat < 0.8 {
                     //diffuse
                     let albedo = Color::random() * Color::random();
-                    let sphere_material = Rc::new(Lambertian::new(albedo));
+                    let sphere_material = Rc::new(Lambertian::new_solid_color(albedo));
                     let center2 = center + Vec3::new(0.0, rand_range(0.0, 0.5), 0.0);
                     world.add(Rc::new(MovingSphere::new(
                         center,
@@ -57,7 +62,7 @@ pub fn random_scene() -> HittableList {
         material_glass,
     )));
 
-    let material2 = Rc::new(Lambertian::new(Color::new(0.4, 0.2, 0.1)));
+    let material2 = Rc::new(Lambertian::new_solid_color(Color::new(0.4, 0.2, 0.1)));
     world.add(Rc::new(Sphere::new(
         Point3::new(-4.0, 1.0, 0.0),
         1.0,

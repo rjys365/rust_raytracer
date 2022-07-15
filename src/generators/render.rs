@@ -4,7 +4,7 @@ use crate::camera::Camera;
 // use crate::material::lambertian::Lambertian;
 // use crate::material::metal::Metal;
 use crate::math_util::{rand_double, Color, Point3, Ray, Vec3};
-use crate::models::bvh_node::BvhNode;
+// use crate::models::bvh_node::BvhNode;
 use crate::models::hittable::Hittable;
 use crate::models::random_scene::random_scene;
 // use crate::models::sphere::Sphere;
@@ -36,7 +36,7 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
 
     //World
     let world = random_scene();
-    let world=BvhNode::new(&world.objects,0.0,1.0);
+    // let world=BvhNode::new(&world.objects,0.0,1.0);
     //Camera
 
     let lookfrom = Point3::new(13.0, 2.0, 3.0);

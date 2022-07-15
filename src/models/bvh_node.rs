@@ -91,12 +91,10 @@ impl Hittable for BvhNode {
             } else {
                 Some(lrec)
             }
+        } else if let Some(rchild) = &self.right {
+            rchild.hit(r, t_min, t_max)
         } else {
-            if let Some(rchild) = &self.right {
-                rchild.hit(r, t_min, t_max)
-            } else {
-                None
-            }
+            None
         }
     }
 }
