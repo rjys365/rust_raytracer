@@ -28,7 +28,7 @@ fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32, background: &Color) -> C
             rec.mat_ptr.emitted(rec.u, rec.v, &rec.p)
         }
     } else {
-        background.clone()
+        *background
     }
 }
 
@@ -44,7 +44,7 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
     //Camera
 
     let lookfrom = Point3::new(26.0, 3.0, 6.0);
-    let lookat = Point3::new(0.0,2.0,0.0);
+    let lookat = Point3::new(0.0, 2.0, 0.0);
     let vup = Vec3::new(0.0, 1.0, 0.0);
     let aperture = 0.0;
     let dist_to_focus = 10.0;

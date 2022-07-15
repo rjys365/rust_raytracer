@@ -23,7 +23,19 @@ pub fn simple_light() -> HittableList {
     )));
 
     let difflight = Rc::new(DiffuseLight::new_solid_color(Color::new(4.0, 4.0, 4.0)));
-    objects.add(Rc::new(XyRect::new(3.0, 5.0, 1.0, 3.0, -2.0, difflight)));
+    objects.add(Rc::new(XyRect::new(
+        3.0,
+        5.0,
+        1.0,
+        3.0,
+        -2.0,
+        difflight.clone(),
+    )));
+    objects.add(Rc::new(Sphere::new(
+        Point3::new(0.0, 8.0, 0.0),
+        2.0,
+        difflight,
+    )));
 
     objects
 }
