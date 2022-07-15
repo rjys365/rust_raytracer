@@ -9,7 +9,7 @@ use crate::{
 
 pub fn two_perlin_sphere() -> HittableList {
     let mut objects = HittableList::default();
-    let pertext = Rc::new(NoiseTexture::new());
+    let pertext = Rc::new(NoiseTexture::new_scale(4.0));
     let permat = Rc::new(Lambertian::new_texture(pertext));
     objects.add(Rc::new(Sphere::new(
         Point3::new(0.0, -1000.0, 0.0),
