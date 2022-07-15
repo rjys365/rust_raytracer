@@ -21,7 +21,7 @@ fn main() {
 
     const ASPECT_RATIO: f64 = 16.0 / 9.0;
 
-    let width = 200;
+    let width = 1920;
     let height = (width as f64 / ASPECT_RATIO) as u32;
     //let quality = 60; // From 0 to 100
     let path = "output/output.png";
