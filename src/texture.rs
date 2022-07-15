@@ -6,4 +6,5 @@ pub trait Texture {
 
 pub mod checker_texture;
 pub mod image_texture;
+pub mod noise;
 pub mod solid_color;
