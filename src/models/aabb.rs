@@ -1,6 +1,6 @@
 use crate::math_util::{Point3, Ray};
 
-#[derive(Clone, Copy, Default)]
+#[derive(Clone, Copy, Default,Debug)]
 pub struct Aabb {
     pub minimum: Point3,
     pub maximum: Point3,
@@ -17,18 +17,18 @@ impl Aabb {
         &self.maximum
     }
     pub fn hit(&self, r: &Ray, t_min: f64, t_max: f64) -> bool {
-        for a in 0..2 {
+        for a in 0..=2 {
             let inv_d = 1.0 / r.direction()[a];
             let t0 = (if inv_d < 0.0 {
-                self.maximum[a]
+                self.max()[a]
             } else {
-                self.minimum[a]
+                self.min()[a]
             } - r.origin()[a])
                 * inv_d;
             let t1 = (if inv_d < 0.0 {
-                self.minimum[a]
+                self.min()[a]
             } else {
-                self.maximum[a]
+                self.max()[a]
             } - r.origin()[a])
                 * inv_d;
             let t_min = f64::max(t_min, t0);

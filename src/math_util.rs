@@ -277,5 +277,5 @@ pub fn rand_range(l: f64, h: f64) -> f64 {
 
 pub fn rand_int(l:i32,h:i32)->i32{
     let mut rng = rand::thread_rng();
-    rng.gen_range(l..h)
+    rng.gen_range(l..=h)
 }

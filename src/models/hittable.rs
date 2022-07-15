@@ -1,6 +1,6 @@
 use super::aabb::Aabb;
 use crate::{material::Material, math_util::*};
-use std::rc::Rc;
+use std::{rc::Rc, };
 
 #[derive(Clone)]
 pub struct HitRecord {
@@ -44,6 +44,8 @@ impl HitRecord {
 pub trait Hittable {
     fn hit(&self, r: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord>;
     fn bounding_box(&self, time0: f64, time1: f64) -> Option<Aabb>;
+    fn traverse(&self){}
+    fn print_no(&self){}
 }
 
 #[derive(Default)]

@@ -16,8 +16,8 @@ pub fn random_scene() -> HittableList {
     //     ground_material,
     // )));
     let material_glass = Rc::new(Dieletric::new(1.5));
-    for a in -11..10 {
-        for b in -11..10 {
+    for a in -11..=10 {
+        for b in -11..=10 {
             let choose_mat = rand_double();
             let center = Point3::new(
                 a as f64 + 0.9 * rand_double(),
