@@ -6,7 +6,8 @@ use crate::camera::Camera;
 use crate::math_util::{rand_double, Color, Point3, Ray, Vec3};
 // use crate::models::bvh_node::BvhNode;
 use crate::models::hittable::Hittable;
-use crate::scene::cornell_box::cornell_box;
+use crate::scene::ball::ball;
+// use crate::scene::cornell_box::cornell_box;
 // use crate::scene::simple_light::simple_light;
 // use crate::scene::random_scene::random_scene;
 // use crate::scene::two_perlin_sphere::two_perlin_sphere;
@@ -34,18 +35,19 @@ fn ray_color(r: &Ray, world: &dyn Hittable, depth: i32, background: &Color) -> C
 }
 
 pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress: &ProgressBar) {
-    const SAMPLES_PER_PIXEL: u32 = 200;
+    const SAMPLES_PER_PIXEL: u32 = 10000;
     const MAX_DEPTH: i32 = 50;
     let aspect_ratio: f64 = image_width as f64 / image_height as f64;
 
     //World
     let background = Color::new(0.0, 0.0, 0.0);
-    let world = cornell_box();
+    let world = ball();
     // let world=BvhNode::new(&world.objects,0.0,1.0);
     //Camera
 
-    let lookfrom = Point3::new(278.0, 278.0, -800.0);
-    let lookat = Point3::new(278.0, 278.0, 0.0);
+    let lookat = Point3::new(300.0, 0.0, 0.0);
+    let lookfrom = Point3::new(-1000.0,600.0,-200.0*f64::sqrt(3.0));
+    let lookfrom=lookat+(lookfrom-lookat)*1.5;
     let vup = Vec3::new(0.0, 1.0, 0.0);
     let aperture = 0.0;
     let dist_to_focus = 10.0;

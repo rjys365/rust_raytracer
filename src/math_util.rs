@@ -15,6 +15,9 @@ impl Vec3 {
     pub fn new(x: f64, y: f64, z: f64) -> Self {
         Self { x, y, z }
     }
+    pub fn new_u(x:u32,y:u32,z:u32)->Self{
+        Self::new(x as f64/256.0,y as f64/256.0,z as f64/256.0)
+    }
     pub fn length(&self) -> f64 {
         f64::sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
     }
