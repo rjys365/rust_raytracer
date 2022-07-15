@@ -17,7 +17,7 @@ impl NoiseTexture {
     }
 }
 
-impl Default for NoiseTexture{
+impl Default for NoiseTexture {
     fn default() -> Self {
         Self::new()
     }

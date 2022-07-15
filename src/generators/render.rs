@@ -61,8 +61,8 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
 
     //Render
 
-    for j in (0..image_height - 1).rev() {
-        for i in 0..image_width - 1 {
+    for j in (0..=image_height - 1).rev() {
+        for i in 0..=image_width - 1 {
             let mut pixel_color = Color::default();
             for _k in 1..SAMPLES_PER_PIXEL {
                 let u = (i as f64 + rand_double()) / (image_width as f64 - 1.0);
