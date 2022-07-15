@@ -12,6 +12,7 @@ pub mod generators;
 pub mod material;
 pub mod math_util;
 pub mod models;
+pub mod scene;
 pub mod texture;
 
 fn main() {

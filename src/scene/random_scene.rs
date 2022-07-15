@@ -4,9 +4,9 @@ use crate::material::metal::Metal;
 use crate::math_util::{rand_double, rand_range, Color, Point3, Vec3};
 use crate::texture::checker_texture::CheckerTexture;
 
-use super::hittable::HittableList;
-use super::moving_sphere::MovingSphere;
-use super::sphere::Sphere;
+use crate::models::hittable::HittableList;
+use crate::models::moving_sphere::MovingSphere;
+use crate::models::sphere::Sphere;
 use std::rc::Rc;
 pub fn random_scene() -> HittableList {
     let mut world: HittableList = HittableList::default();

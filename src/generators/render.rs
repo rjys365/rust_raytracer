@@ -6,7 +6,9 @@ use crate::camera::Camera;
 use crate::math_util::{rand_double, Color, Point3, Ray, Vec3};
 // use crate::models::bvh_node::BvhNode;
 use crate::models::hittable::Hittable;
-use crate::models::random_scene::random_scene;
+// use crate::scene::random_scene::random_scene;
+use crate::scene::earth::earth;
+// use crate::scene::two_sphere::two_sphere;
 // use crate::models::sphere::Sphere;
 use image::RgbImage;
 use indicatif::ProgressBar;
@@ -35,7 +37,7 @@ pub fn render(image_height: u32, image_width: u32, img: &mut RgbImage, progress:
     let aspect_ratio: f64 = image_width as f64 / image_height as f64;
 
     //World
-    let world = random_scene();
+    let world = earth();
     // let world=BvhNode::new(&world.objects,0.0,1.0);
     //Camera
 

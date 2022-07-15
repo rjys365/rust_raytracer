@@ -31,7 +31,7 @@ impl Sphere {
         //     <0 1 0> yields <0.50 1.00>       < 0 -1  0> yields <0.50 0.00>
         //     <0 0 1> yields <0.25 0.50>       < 0  0 -1> yields <0.75 0.50>
         let theta = f64::acos(-p.y());
-        let phi = f64::atan2(-p.z(), -p.x()) + PI;
+        let phi = f64::atan2(-p.z(), p.x()) + PI;
         (phi / (2.0 * PI), theta / PI)
     }
 }
