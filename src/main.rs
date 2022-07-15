@@ -19,9 +19,9 @@ fn main() {
     print!("{}[2J", 27 as char); // Clear screen
     print!("{esc}[2J{esc}[1;1H", esc = 27 as char); // Set cursor position as 1,1
 
-    const ASPECT_RATIO: f64 = 16.0 / 9.0;
+    const ASPECT_RATIO: f64 =1.0;// 16.0 / 9.0;
 
-    let width = 400;
+    let width = 600;
     let height = (width as f64 / ASPECT_RATIO) as u32;
     //let quality = 60; // From 0 to 100
     let path = "output/output.png";

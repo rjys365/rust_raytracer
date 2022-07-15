@@ -39,7 +39,7 @@ impl Hittable for YzRect {
         t_min: f64,
         t_max: f64,
     ) -> Option<super::hittable::HitRecord> {
-        let t = (self.k - r.origin().y()) / r.direction().y();
+        let t = (self.k - r.origin().x()) / r.direction().x();
         if t < t_min || t > t_max {
             return None;
         }
